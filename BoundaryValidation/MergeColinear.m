@@ -38,7 +38,7 @@ XMerged(1) = X(1);
 YMerged(1) = Y(1);
 for i = 1:length(transitions)
     XMerged(i+1) = X(transitions(i)+1);
-    YMerged(i+1) = Y(transitions(i)+1)];
+    YMerged(i+1) = Y(transitions(i)+1);
 end
 XMerged(end) = X(end);
 YMerged(end) = Y(end);
