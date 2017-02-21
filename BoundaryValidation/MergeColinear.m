@@ -42,5 +42,3 @@ for i = 1:length(transitions)
 end
 XMerged(end) = X(end);
 YMerged(end) = Y(end);
-
-end
