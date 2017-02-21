@@ -4,7 +4,7 @@ function [Mu, Sigma, LAB] = LABStats(I, Mask)
 %containing tissue and not glass/background.
 
 %inputs:
-%I - (M x N x 3 uint8) RGB color image.
+%I - (M x N x 3 float) RGB color image.
 %Mask - (M x N logical) Mask of pixels to use in calculating normalization
 %       parameters. Optional. Can be provided as an alternative to
 %       performing the linear discriminant analysis.
@@ -21,14 +21,15 @@ M = size(I, 1);
 N = size(I, 2);
 
 %transform image to LAB space
-LAB = RGB2LAB(I);
+LAB = RGB2LAB(I / 255);
 
 %transform to vectorized format
 vLAB = reshape(LAB, [M*N 3]).';
 
 %mask and remove NaN and Inf entries
-vLAB(:, sum(isnan(vLAB), 1) > 0 | sum(isinf(vLAB), 1) | ...
-        ~reshape(Mask, [M*N 1]).') = [];
+Discard = sum(isnan(vLAB), 1) > 0 | sum(vLAB == -Inf, 1) > 0 | ...
+    reshape(~Mask, [M*N 1]).';
+vLAB(:, Discard) = [];
 
 %Get LAB statistics of input image
 Mu = mean(vLAB, 2);
