@@ -5,6 +5,9 @@
 # mex compiled files
 .mexmaci64
 
+# data files
+.mat
+
 # image formats
 .tif
 .tiff
