@@ -52,13 +52,13 @@ end
 %Get LAB statistics of input image
 [SourceMu, SourceSigma, LAB] = LABStats(I, Mask);
 
-%Normalize input image to target statistics in LAB space
-DeltaSigma = TargetSigma ./ SourceSigma;
-DeltaMu = TargetMu - SourceMu;
+%Normalize foreground pixels to target statistics in LAB space
+Mask = reshape(Mask, [M*N 1]);
 LAB = reshape(LAB, [M*N 3]).';
-LAB = (LAB + DeltaMu * ones(1,size(LAB,2))) .* ...
-    (DeltaSigma * ones(1,size(LAB,2)));
+LAB(:,Mask) = (LAB(:,Mask) - SourceMu * ones(1,size(LAB(:,Mask),2))) .* ...
+    ((TargetSigma ./ SourceSigma) * ones(1,size(LAB(:,Mask),2)));
+LAB(:,Mask) = LAB(:,Mask) + TargetMu * ones(1,size(LAB(:,Mask),2));
 LAB = reshape(LAB.', [M N 3]);
 
 %Convert normalized image to RGB
-Normalized = LAB2RGB(LAB);
+Normalized = uint8(255 * LAB2RGB(LAB));
