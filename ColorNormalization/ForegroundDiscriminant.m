@@ -21,5 +21,5 @@ N = size(I, 2);
 Discriminants = W * [reshape(I, [M*N 3 1]).'; ones(1, M*N)];
 
 %Generate mask
-Mask = Discriminants(1,:) > Discriminants(2,:);
+Mask = Discriminants(1,:) < Discriminants(2,:);
 Mask = reshape(Mask, [M N]);
