@@ -1,0 +1,18 @@
+# autosave files
+.asv
+.m~
+
+# mex compiled files
+.mexmaci64
+
+# image formats
+.tif
+.tiff
+.TIF
+.TIFF
+.png
+.jpg
+.jpeg
+.jp2k
+.JPG
+.JPEG
